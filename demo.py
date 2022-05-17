@@ -21,18 +21,22 @@ Cens = cen.reshape(1, cen.shape[0], cen.shape[1])
 # AKM
 mod = AKM(X, c_true, debug=True)
 mod.opt(Cens, ITER=100)
-Y = mod.y_pre
-n_iter = mod.n_iter_
-times = mod.time_arr
-cal_num_dist = mod.cal_num_dist
-
+y_pred = mod.y_pre[0]
+n_iter = mod.n_iter_[0]
+# times = mod.time_arr
+cal_num_dist = mod.cal_num_dist[0]
+dist_num_arr = mod.dist_num_arr[0]
+print(y_pred[:10])
 print(n_iter)
+print(Mfuns.kmeans_obj(X, y_pred))
 print(cal_num_dist)
-print(times)
+print(dist_num_arr[:n_iter])
+print(np.sum(dist_num_arr[:n_iter]))
 
 # KMeans
-t_start = time.time()
-mod = KMeans(n_clusters=c_true, init=Cens[0]).fit(X)
-t_end = time.time()
+mod = KMeans(n_clusters=c_true, init=Cens[0], n_init=1).fit(X)
 n_iter = mod.n_iter_
-print(t_end - t_start)
+y_pred = mod.labels_
+print(y_pred[:10])
+print(n_iter)
+print(Mfuns.kmeans_obj(X, y_pred))

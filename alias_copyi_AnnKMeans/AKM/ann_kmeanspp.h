@@ -10,6 +10,7 @@
 #include "Eigen339/Eigen/Core"
 #include <vector>
 #include <float.h>
+#include <numeric>
 
 using namespace std;
 using namespace Eigen;
@@ -35,6 +36,7 @@ struct Neighbor
 
 typedef struct Veci_int{
     VectorXi labels;
+    vector<int> dist_num_arr;
     int iter;
     double cal_dist_num;
     double time;

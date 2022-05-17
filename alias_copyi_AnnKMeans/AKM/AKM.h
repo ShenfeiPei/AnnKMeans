@@ -8,6 +8,7 @@ public:
     bool debug;
     MatrixOur X;
     vector<vector<int>> Y;
+    vector<vector<int>> dist_num_arr;
     vector<int> n_iter_;
     vector<double> time_arr;
     vector<int> cal_num_dist;

@@ -28,6 +28,7 @@ void AKM::opt(vector<vector<vector<double>>> &Cen, int ITER){
     n_iter_.resize(rep);
     time_arr.resize(rep);
     cal_num_dist.resize(rep);
+    dist_num_arr.resize(rep);
 
     for (int rep_i = 0; rep_i < rep; rep_i++){
         Veci_int ret = opt_once(Cen[rep_i], ITER);
@@ -35,7 +36,7 @@ void AKM::opt(vector<vector<vector<double>>> &Cen, int ITER){
         time_arr[rep_i] = ret.time;
         n_iter_[rep_i] = ret.iter;
         cal_num_dist[rep_i] = ret.cal_dist_num;
-
+        dist_num_arr[rep_i] = ret.dist_num_arr;
         Y[rep_i].assign(ret.labels.data(),ret.labels.data() + N);
     }
 }

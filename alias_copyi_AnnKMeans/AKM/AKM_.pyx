@@ -27,5 +27,9 @@ cdef class PyAKM:
         return np.array(self.c_AKM.cal_num_dist)
 
     @property
+    def dist_num_arr(self):
+        return np.array(self.c_AKM.dist_num_arr)
+
+    @property
     def time_arr(self):
         return np.array(self.c_AKM.time_arr)

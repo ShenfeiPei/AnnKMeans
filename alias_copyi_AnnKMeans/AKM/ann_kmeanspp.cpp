@@ -53,7 +53,7 @@ Veci_int run(MatrixOur &dataset, MatrixOur &centroids, int ITER, bool debug) {
     new_centroids.setZero();
     iteration_counter = 0;
     num_of_neighbour = 0;
-    cal_dist_num = 0;
+    vector<int> dist_num_arr(ITER, 0);
     flag.setZero();
 
     //initialize clusters_point_index and point_center_dist
@@ -66,7 +66,9 @@ Veci_int run(MatrixOur &dataset, MatrixOur &centroids, int ITER, bool debug) {
     std::chrono::time_point<std::chrono::steady_clock> t2;
     t1 = std::chrono::steady_clock::now();
 
+    int iter = 0;
     while (true) {
+        cal_dist_num = 0;
         old_flag = flag;
         //record clusters_point_index from the previous round
         clusters_point_index.assign(temp_clusters_point_index.begin(), temp_clusters_point_index.end());
@@ -260,11 +262,14 @@ Veci_int run(MatrixOur &dataset, MatrixOur &centroids, int ITER, bool debug) {
 
             }
 
+            dist_num_arr[iter] = cal_dist_num;
+            iter ++;
         } else {
             break;
         }
     }
 
+    cal_dist_num = std::accumulate(dist_num_arr.begin(), dist_num_arr.end(), decltype(dist_num_arr)::value_type(0));
     t2 = std::chrono::steady_clock::now();
     double time_spend = std::chrono::duration<double>(t2 - t1).count();
 
@@ -280,6 +285,7 @@ Veci_int run(MatrixOur &dataset, MatrixOur &centroids, int ITER, bool debug) {
     ret.labels = labels.cast <int> ();
     ret.iter = iteration_counter;
     ret.cal_dist_num = cal_dist_num;
+    ret.dist_num_arr = dist_num_arr;
     ret.time = time_spend;
     return ret;
 }
